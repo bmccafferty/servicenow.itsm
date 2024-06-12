@@ -8,18 +8,22 @@ The Ansible Collection for ServiceNow IT Service Management ([ITSM](https://www.
 | Release | Status                      | Expected end of life |
 | ------: | --------------------------: | -------------------: |
 |       2 | Maintained                  | TBA                  |
-|       1 | Maintained (bug fixes only) | September 2023       |
+|       1 | EOL                         | September 2023       |
+
+## ServiceNow Platform Support
+
+| ServiceNow Release | Collection Release          | Expected end of life |
+| -----------------: | --------------------------: | -------------------: |
+| Washington DC      | 2.5.0+                      | TBA                  |
+| Vancouver          | 2.5.0+                      | TBA                  |
+| Utah               | 2.1.0+                      | TBA                  |
+| Tokyo              | 2.1.0+                      | TBA                  |
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
-This collection has been tested against following Ansible versions: **>=2.9.10**.
+This collection has been tested against the following Ansible versions: **>=2.9.10**.
 
-For collections that support Ansible 2.9, please ensure you update your `network_os` to use the
-fully qualified collection name (for example, `cisco.ios.ios`).
-Plugins and modules within a collection may be tested with only specific Ansible versions.
-A collection may contain metadata that identifies these versions.
-PEP440 is the schema used to describe the versions of Ansible.
 <!--end requires_ansible-->
 
 ## Python version compatibility
@@ -48,12 +52,16 @@ Name | Description
 [servicenow.itsm.configuration_item](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.configuration_item_module.rst)|Manage ServiceNow configuration items
 [servicenow.itsm.configuration_item_batch](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.configuration_item_batch_module.rst)|Manage ServiceNow configuration items in batch mode
 [servicenow.itsm.configuration_item_info](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.configuration_item_info_module.rst)|List ServiceNow configuration item
+[servicenow.itsm.configuration_item_relations_info](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.configuration_item_relations_info_module.rst)|List ServiceNow configuration items's relations
+[servicenow.itsm.configuration_item_relations](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.configuration_item_relations_module.rst)|Manage ServiceNow configuration items's relations
 [servicenow.itsm.incident](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.incident_module.rst)|Manage ServiceNow incidents
 [servicenow.itsm.incident_info](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.incident_info_module.rst)|List ServiceNow incidents
 [servicenow.itsm.problem](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.problem_module.rst)|Manage ServiceNow problems
 [servicenow.itsm.problem_info](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.problem_info_module.rst)|List ServiceNow problems
 [servicenow.itsm.problem_task](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.problem_task_module.rst)|Manage ServiceNow problem tasks
 [servicenow.itsm.problem_task_info](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.problem_task_info_module.rst)|List ServiceNow problem tasks
+[servicenow.itsm.service_catalog_info_module](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.service_catalog_info_module.rst)|List ServiceNow service catalogs
+[servicenow.itsm.service_catalog_module](https://github.com/ansible-collections/servicenow.itsm/blob/main/docs/servicenow.itsm.service_catalog_module.rst)|Manage ServiceNow service catalogs
 
 <!--end collection content-->
 
@@ -73,10 +81,36 @@ collections:
 
 ## Using this collection
 
-You can either call modules by their Fully Qualified Collection Namespace (FQCN), such as `servicenow.itsm.incident_info`, or you can call modules by their short name if you list the `servicenow.itsm` collection in the playbook's `collections` keyword:
+You can either call modules by their Fully Qualified Collection Namespace (FQCN), such as `servicenow.itsm.incident_info`:
 
-TODO: INCIDENT_INFO module example.
+```yaml
+- name: Retrieve incidents by number
+  servicenow.itsm.incident_info:
+    # Instance data
+    instance:
+      host: https://dev12345.service-now.com
+      username: user
+      password: pass
+    number: INC0000039
+  register: result
+```
 
+or you can call modules by their short name if you list the `servicenow.itsm` collection in the playbook's `collections` keyword:
+
+```yaml
+...
+  collections:
+    - servicenow.itsm
+...
+  tasks:
+    - incident_info:
+        instance:
+          host: https://dev12345.service-now.com
+          username: user
+          password: pass
+        number: INC0000039
+      register: result
+```
 
 ### See Also:
 
@@ -91,8 +125,11 @@ We welcome community contributions to this collection. If you find problems, ple
 You can also join us on:
 
 - IRC - the ``#ansible-community`` [irc.libera.chat](https://libera.chat/) channel
+- [Ansible Forum](https://forum.ansible.com/?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW)
 
 See the [Ansible Community Guide](https://docs.ansible.com/ansible/latest/community/index.html) for details on contributing to Ansible.
+
+See [this page](https://docs.ansible.com/ansible/latest/community/communication.html) for a complete and up to date list of communication channels and their purposes.
 
 
 ## Release notes
@@ -105,7 +142,7 @@ Assuming your (local) repository has set `origin` to your GitHub fork and this r
 Prepare the release:
 - Make sure your fork is up to date: `git checkout main && git pull && git fetch upstream && git merge upstream/main`.
 - Run `ansible-playbook scripts/prepare_release.yml`. The playbook tries to generate the next minor release automatically, but you can also set the version explicitly with `--extra-vars "version=$VERSION"`. You *will* have to set the version explicitly when publishing a new major release.
-- Push the created release branch to your GitHub repo (`git push --set-upstream origin prepare_$VERSION_release`) and open a pull request for the review.
+- Push the created release branch to your GitHub repo (`git push --set-upstream origin prepare_$VERSION_release`) and open a pull request for review.
 
 Push the release:
 - After the PR has been merged, make sure your fork is up to date: `git checkout main && git pull && git fetch upstream && git merge upstream/main`.

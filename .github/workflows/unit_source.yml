@@ -29,6 +29,10 @@ on:
               "python-version": "3.9"
             },
             {
+              "ansible-version": "stable-2.17",
+              "python-version": "3.9"
+            },
+            {
               "ansible-version": "milestone",
               "python-version": "3.9"
             },
@@ -51,14 +55,12 @@ jobs:
       fail-fast: false
       matrix:
         ansible-version:
-          # ansible 2.9 does install from git
-          # - stable-2.14  # Disabled due to bug in collection loader
           - stable-2.15
           - stable-2.16
+          - stable-2.17
           - milestone
           - devel
         python-version:
-          - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"

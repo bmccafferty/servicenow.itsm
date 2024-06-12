@@ -9,3 +9,5 @@ jobs:
     with:
       envname: ""
       labelname: "lint"
+      checkout_ref: ${{ github.event.pull_request.head.sha }}
+      checkout_fetch_depth: "0"

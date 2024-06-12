@@ -1,10 +1,10 @@
 
-.. Created with antsibull-docs 2.7.0
+.. Created with antsibull-docs 2.11.0
 
 servicenow.itsm.api_info module -- Manage ServiceNow GET requests
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-This module is part of the `servicenow.itsm collection <https://galaxy.ansible.com/ui/repo/published/servicenow/itsm/>`_ (version 2.4.0).
+This module is part of the `servicenow.itsm collection <https://galaxy.ansible.com/ui/repo/published/servicenow/itsm/>`_ (version 2.6.0).
 
 It is not included in ``ansible-core``.
 To check whether it is installed, run ``ansible-galaxy collection list``.
@@ -46,6 +46,22 @@ Parameters
   </tr>
   </thead>
   <tbody>
+  <tr>
+    <td colspan="2" valign="top">
+      <div class="ansibleOptionAnchor" id="parameter-api_path"></div>
+      <p style="display: inline;"><strong>api_path</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-api_path" title="Permalink to this option"></a>
+      <p style="font-size: small; margin-bottom: 0;">
+        <span style="color: purple;">string</span>
+      </p>
+      <p><i style="font-size: small; color: darkgreen;">added in servicenow.itsm 2.5.0</i></p>
+    </td>
+    <td valign="top">
+      <p>The path of the service which a record is to be created, updated or deleted from.</p>
+      <p>Mutually exclusive with <code class='docutils literal notranslate'>resource</code>.</p>
+      <p>Require one of <code class='docutils literal notranslate'>resource</code> or <code class='docutils literal notranslate'>api_path</code>.</p>
+    </td>
+  </tr>
   <tr>
     <td colspan="2" valign="top">
       <div class="ansibleOptionAnchor" id="parameter-columns"></div>
@@ -380,11 +396,12 @@ Parameters
       <a class="ansibleOptionLink" href="#parameter-resource" title="Permalink to this option"></a>
       <p style="font-size: small; margin-bottom: 0;">
         <span style="color: purple;">string</span>
-        / <span style="color: red;">required</span>
       </p>
     </td>
     <td valign="top">
-      <p>The name of the table that we want to obtain records from.</p>
+      <p>The name of the table in which a record is to be created, updated or deleted from.</p>
+      <p>Mutually exclusive with <code class='docutils literal notranslate'>api_path</code>.</p>
+      <p>Require one of <code class='docutils literal notranslate'>resource</code> or <code class='docutils literal notranslate'>api_path</code>.</p>
     </td>
   </tr>
   <tr>
@@ -464,6 +481,10 @@ Examples
         query_no_domain: true
         no_count: false
       register: result
+
+    - name: Retrieve all linux servers
+      servicenow.itsm.api_info:
+        api_path: api/now/cmdb/instance/cmdb_ci_linux_server
 
 
 

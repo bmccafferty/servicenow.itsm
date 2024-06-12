@@ -333,3 +333,84 @@ releases:
     - table_client.yml
     - update_prepare_release.yml
     release_date: '2024-03-07'
+  2.5.0:
+    changes:
+      bugfixes:
+      - now - Fix crash when SN_TIMEOUT is set because is it passed as string instead
+        of a number (https://github.com/ansible-collections/servicenow.itsm/pull/348).
+      minor_changes:
+      - Added option to allow changing sysparm_limit for table query (https://github.com/ansible-collections/servicenow.itsm/pull/309).
+      - 'Included integration tests and instances targeting the following ServiceNow
+        releases: Washington, Vancouver, Utah, Tokyo'
+      - api - allow `api` module to make request outside `Table API` namespace(https://github.com/ansible-collections/servicenow.itsm/pull/314).
+      - api_info - allow `api_info` module to make request outside `Table API` namespace(https://github.com/ansible-collections/servicenow.itsm/pull/314).
+      - change_request - allow change_request_mapping for category parameter (https://github.com/ansible-collections/servicenow.itsm/issues/266).
+      - client - allow user to pass a `object_hook` function to rest client for custom
+        decoding of the json response(https://github.com/ansible-collections/servicenow.itsm/pull/316).
+      - configuration_item_relations - add module to add and remove relations between
+        configuration items.
+      - configuration_item_relations_info - add module retrieve relations of a configuration
+        item.
+      - now - add cache support for the inventory plugin (https://github.com/ansible-collections/servicenow.itsm/pull/315).
+      - now.py - replace "." in reference field column name to "_" in host variable
+      release_summary: Introduce generic API client, test against all current releases
+        of ServiceNow, and introduce support for Event-Driven Ansible Notification
+        Service (aka EDA NS) application
+    fragments:
+    - api.yml
+    - api_info.yml
+    - change_request_category.yml
+    - ci_relations.yml
+    - ci_relations_info.yml
+    - client_object_hook.yml
+    - inventory.yml
+    - inventory_timeout.yml
+    - more_test_instances.yml
+    - no_dot_var.yml
+    - release_summary.yml
+    - sysparm_limit.yml
+    modules:
+    - description: Manage ServiceNow relations between configuration items
+      name: configuration_item_relations
+      namespace: ''
+    - description: Retreive ServiceNow relations of configuration items
+      name: configuration_item_relations_info
+      namespace: ''
+    release_date: '2024-04-25'
+  2.6.0:
+    changes:
+      bugfixes:
+      - now - Fix crash of inventory when query is present (https://github.com/ansible-collections/servicenow.itsm/issues/361).
+      minor_changes:
+      - Added check for records(sys_id) that are already processed with reference
+        records
+      - Raise Ansible runtime version to 2.15.0 in accordance with Ansible Lifecycle
+        policy. This implies dropping Python 3.9 from the test matrix as well.
+      - ServiceNow returns duplicated records causing error at line referenced.pop("sys_id")
+      - Update authors in galaxy.yml
+      release_summary: Introduce service_catalog modules; fix inventory crash bug
+        and improve performance by handling duplicate records better
+    fragments:
+    - galaxy_update.yml
+    - handle_duplicate_records.yml
+    - inventory_bug.yml
+    - release_summary.yml
+    - workflow_update.yml
+    modules:
+    - description: Manage ServiceNow service catalog cart
+      name: service_catalog
+      namespace: ''
+    - description: List ServiceNow service catalogs along with categories and items
+      name: service_catalog_info
+      namespace: ''
+    release_date: '2024-05-23'
+  2.6.1:
+    changes:
+      bugfixes:
+      - docs - Documentation generated for 2.6.0 was incorrect due to maintainer error.
+        This updates the documentation to be correct and consistent.
+      release_summary: Fix incorrect documentation shipped with 2.6.0
+    fragments:
+    - fix_documentation.yml
+    - release_summary.yml
+    release_date: '2024-05-29'
