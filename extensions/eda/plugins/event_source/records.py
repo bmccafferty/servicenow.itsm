@@ -141,7 +141,6 @@ from plugins.module_utils.instance_config import (  # noqa: E402
 )
 from plugins.module_utils.query import construct_sysparm_query_from_query  # noqa: E402
 
-
 logger = logging.getLogger(__name__)
 
 

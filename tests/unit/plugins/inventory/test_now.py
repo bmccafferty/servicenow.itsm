@@ -21,7 +21,6 @@ from ansible_collections.servicenow.itsm.plugins.module_utils.relations import (
     REL_QUERY,
 )
 
-
 try:
     # post 2.19 is strict about jinja template safety. This means test inputs
     # for params (like groups) that could contain jinja templates need
