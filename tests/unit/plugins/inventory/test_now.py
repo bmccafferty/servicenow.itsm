@@ -21,7 +21,6 @@ from ansible_collections.servicenow.itsm.plugins.module_utils.relations import (
     REL_QUERY,
 )
 
-
 try:
     # post 2.19 is strict about jinja template safety. This means test inputs
     # for params (like groups) that could contain jinja templates need
@@ -181,6 +180,7 @@ class TestInstance:
                 SN_HOST="host",
                 SN_USERNAME="username",
                 SN_PASSWORD="password",
+                SN_API_KEY="api_key",
                 SN_CLIENT_ID="client_id",
                 SN_CLIENT_SECRET="client_secret",
                 SN_REFRESH_TOKEN="refresh_token",
@@ -197,6 +197,7 @@ class TestInstance:
             host="host",
             username="username",
             password="password",
+            api_key="api_key",
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
@@ -219,6 +220,7 @@ class TestInstance:
             host="host",
             username="SN_USERNAME",
             password="b",
+            api_key="SN_API_KEY",
             client_id="SN_CLIENT_ID",
             client_secret="SN_CLIENT_SECRET",
             refresh_token="SN_REFRESH_TOKEN",
@@ -234,6 +236,7 @@ class TestInstance:
                 SN_HOST="host",
                 SN_USERNAME="username",
                 SN_PASSWORD="password",
+                SN_API_KEY="api_key",
                 SN_CLIENT_ID="client_id",
                 SN_CLIENT_SECRET="client_secret",
                 SN_REFRESH_TOKEN="refresh_token",
@@ -250,6 +253,7 @@ class TestInstance:
             host="host",
             username="username",
             password="password",
+            api_key="api_key",
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
@@ -265,6 +269,7 @@ class TestInstance:
                 SN_HOST="host",
                 SN_USERNAME="username",
                 SN_PASSWORD="password",
+                SN_API_KEY="api_key",
                 SN_CLIENT_ID="client_id",
                 SN_CLIENT_SECRET="client_secret",
                 SN_REFRESH_TOKEN="refresh_token",
@@ -280,6 +285,7 @@ class TestInstance:
             host="host",
             username="username",
             password="password",
+            api_key="api_key",
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
@@ -295,6 +301,7 @@ class TestInstance:
                 SN_HOST="host",
                 SN_USERNAME="username",
                 SN_PASSWORD="password",
+                SN_API_KEY="api_key",
                 SN_CLIENT_ID="client_id",
                 SN_CLIENT_SECRET="client_secret",
                 SN_REFRESH_TOKEN="refresh_token",
@@ -311,6 +318,7 @@ class TestInstance:
             host="host",
             username="username",
             password="password",
+            api_key="api_key",
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
